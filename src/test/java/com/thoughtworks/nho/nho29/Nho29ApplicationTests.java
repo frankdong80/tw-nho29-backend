@@ -11,6 +11,7 @@ public class Nho29ApplicationTests {
 
 	@Test
 	public void contextLoads() {
+	    assert true;
 	}
 
 }
