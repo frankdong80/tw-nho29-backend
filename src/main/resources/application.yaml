@@ -1,0 +1,26 @@
+spring:
+  transaction:
+    default-timeout: 30
+  profiles:
+    active: local
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/wm
+
+  jpa:
+    properties:
+      hibernate.jdbc.batch_size: 50
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+
+logging:
+  file: tw-nho29-service.log
+  level:
+    org.springframework.orm.jpa: info
+    org.springframework.security.web.access.ExceptionTranslationFilter: debug
+    org.hibernate.SQL: info
+    org.hibernate.type.descriptor.sql: info
