@@ -10,7 +10,7 @@ public class TaskCardVO {
 
     private String name;
 
-    private String imgUrl;
+    private String icon;
 
     private String description;
 

@@ -28,8 +28,6 @@ CREATE TABLE IF NOT EXISTS test_paper (
     CREATE TABLE IF NOT EXISTS doc (
       id INT NOT NULL,
       name VARCHAR(255) NULL,
-      description VARCHAR(255) NULL,
-      type INT NULL,
       url VARCHAR(255) NULL,
       task_card_id INT,
       PRIMARY KEY (id));

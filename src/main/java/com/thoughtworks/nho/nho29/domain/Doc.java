@@ -15,19 +15,16 @@ import javax.persistence.*;
 @ToString
 public class Doc {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name="descirption")
-    private String description;
+    @Column(name = "url")
+    private String url;
 
-    @Column(name="type")
-    private String type;
-
-    @Column(name="taskCardId")
+    @Column(name = "taskCardId")
     private Long taskCardId;
 
 }
