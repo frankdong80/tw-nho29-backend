@@ -1,5 +1,6 @@
 package com.thoughtworks.nho.nho29.web.controller;
 
+<<<<<<< HEAD
 import com.thoughtworks.nho.nho29.domain.TaskCard;
 import com.thoughtworks.nho.nho29.service.TaskCardService;
 import org.junit.Before;
@@ -22,6 +23,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -64,10 +67,21 @@ public class TaskCardControllerTest {
     }
 
     @Test
-    public void test_TaskCardController_with_correct_clubId () throws Exception{
+    public void test_TaskCardController_with_correct_clubId () throws Exception {
         when(taskCardService.getTaskCardListByTrainingClubId(anyLong()))
-                .thenReturn(Arrays.asList(taskcard,taskcard));
+                .thenReturn(Arrays.asList(taskcard, taskcard));
         Long clubId = 1001l;
-        assertEquals(Arrays.asList(taskcard,taskcard), taskCardController.getTrainingCardsByTrainingClubId(clubId));
+        assertEquals(Arrays.asList(taskcard, taskcard), taskCardController.getTrainingCardsByTrainingClubId(clubId));
+    }
+
+    @Test
+    public void getTrainingCardTest() throws Exception {
+        Long clubId = 1001L;
+        Long cardId = 1001L;
+
+        String expected = "{\"id\":1001,\"name\":\"任务卡1001\",\"icon\":\"https://img.zcool.cn/community/012db458fca3fda8012160f7f86d21.png@1280w_1l_2o_100sh.png\",\"description\":\"欢迎来到任务卡1001\",\"trainingClubId\":1001,\"docs\":[{\"id\":1001,\"name\":\"文档1001\",\"url\":\"https://info.thoughtworks.com/rs/thoughtworks2/images/agile_maturity_model.pdf\"},{\"id\":1002,\"name\":\"文档1002\",\"url\":\"https://info.thoughtworks.com/rs/thoughtworks2/images/twebook-perspectives-estimation_1.pdf\"}]}";
+        this.mvc.perform(get("/training-clubs/{clubId}/task-cards/{cardId}", clubId, cardId))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(equalTo(expected)));
     }
 }
