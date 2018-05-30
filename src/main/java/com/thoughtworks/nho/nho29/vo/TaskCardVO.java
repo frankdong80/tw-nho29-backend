@@ -2,9 +2,11 @@ package com.thoughtworks.nho.nho29.vo;
 
 import com.thoughtworks.nho.nho29.domain.Doc;
 import com.thoughtworks.nho.nho29.domain.TaskCard;
+import lombok.Data;
 
 import java.util.List;
 
+@Data
 public class TaskCardVO {
     private Long id;
 
@@ -16,7 +18,7 @@ public class TaskCardVO {
 
     private List<DocVO> docs;
 
-    private Long clubId;
+    private Long trainingClubId;
 
     public TaskCardVO(TaskCard taskCard, List<Doc> docs) {
 
