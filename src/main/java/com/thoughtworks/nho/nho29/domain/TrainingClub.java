@@ -1,17 +1,18 @@
 package com.thoughtworks.nho.nho29.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@Table(name = "training_club")
+@Data
+@EqualsAndHashCode(exclude = {"trainingClubUsers"})
+@ToString(exclude = {"trainingClubUsers"})
 @Entity
-@ToString
+@Table(name = "training_club")
 public class TrainingClub {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +24,13 @@ public class TrainingClub {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "teacherName")
-    private String teacherName;
+    @Column(name = "thumbnail_url")
+    private String thumbnailUrl;
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "trainingClubs")
+    private Set<TrainingClubUser> trainingClubUsers = new HashSet<>();
+
+
+
 }

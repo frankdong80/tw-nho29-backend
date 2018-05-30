@@ -1,5 +1,7 @@
-delete from nho_user;
-insert into nho_user values (0,'1','1');
+insert into training_club_user(id, username, password) values (1,'admin','admin');
+insert into training_club(id, `name`, description, thumbnail_Url) values (1, 'Java训练营', '熟悉Java开发','thumbnail_Url');
+insert into training_club(id, `name`, description, thumbnail_Url) values (2, '前端训练营', '熟悉前端设计和开发','thumbnail_Url');
+insert into training_club(id, `name`, description, thumbnail_Url) values (3, 'DBA训练营', '熟悉和设计数据库','thumbnail_Url');
 
-delete from training_club ；
-insert into values (1, '训练营1', '欢迎来到训练营1', '张三');
+insert into training_club_user_clubs (training_club_id, training_club_user_id) values (1,1);
+insert into training_club_user_clubs (training_club_id, training_club_user_id) values (2,1);

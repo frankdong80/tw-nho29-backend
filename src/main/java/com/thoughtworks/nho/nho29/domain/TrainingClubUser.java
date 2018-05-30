@@ -1,25 +1,50 @@
 package com.thoughtworks.nho.nho29.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.security.Principal;
+import java.util.HashSet;
+import java.util.Set;
 
-@Builder
-@AllArgsConstructor
+
 @NoArgsConstructor
-@Setter
-@Getter
+@Data
 @Table(name = "training_club_user")
 @Entity
-@ToString
-public class TrainingClubUser {
+@EqualsAndHashCode(exclude = {"trainingClubs"})
+@ToString(exclude = {"trainingClubs"})
+public class TrainingClubUser implements Principal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    private String username;
 
-    @Column(name = "training_club_id")
-    private Long trainingClubId;
+    private String password;
+
+    public TrainingClubUser(Long id,String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "training_club_user_clubs",
+            joinColumns = {
+                @JoinColumn(name = "training_club_user_id")
+            },
+            inverseJoinColumns = {
+                @JoinColumn(name = "training_club_id")
+            }
+    )
+    private Set<TrainingClub> trainingClubs = new HashSet<>();
+
+    @Override
+    public String getName() {
+        return this.username;
+    }
 }
