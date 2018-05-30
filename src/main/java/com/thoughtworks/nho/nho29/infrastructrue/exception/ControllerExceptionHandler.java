@@ -51,6 +51,12 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(body);
     }
 
+    @ExceptionHandler(value = {Throwable.class})
+    public ResponseEntity<Object> unknownException(Throwable ex, WebRequest req) {
+        ExceptionBody body = new ExceptionBody(ex);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(body);
+    }
+
     @ExceptionHandler({TransactionTimedOutException.class})
     public ResponseEntity<Object> handle(TransactionTimedOutException ex, WebRequest request) {
         log.error("Transaction timeout [{}]", request.toString(), ex);
@@ -63,8 +69,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         if (ex.getMessage().contains("timeout")) {
             return ResponseEntity.status(HttpStatus.REQUEST_TIMEOUT).body(new ExceptionBody("TRANSACTION_TIMEOUT"));
         } else {
-            HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-            return handleExceptionInternal(ex, null, new HttpHeaders(), status, request);
+            return unknownException(ex, request);
         }
     }
 }

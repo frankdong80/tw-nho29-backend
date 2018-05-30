@@ -15,7 +15,7 @@ public class ExceptionBody {
         this.message = message;
     }
 
-    public ExceptionBody(Exception ex) {
+    public ExceptionBody(Throwable ex) {
         this.message = ex.getMessage();
         this.exception = ex.getClass().getCanonicalName();
     }
