@@ -5,6 +5,7 @@ import com.thoughtworks.nho.nho29.domain.TaskCard;
 import lombok.Data;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 public class TaskCardVO {
@@ -16,11 +17,16 @@ public class TaskCardVO {
 
     private String description;
 
-    private List<DocVO> docs;
-
     private Long trainingClubId;
 
-    public TaskCardVO(TaskCard taskCard, List<Doc> docs) {
+    private List<DocVO> docs;
 
+    public TaskCardVO(TaskCard taskCard, List<Doc> docs) {
+        this.id = taskCard.getId();
+        this.name = taskCard.getName();
+        this.icon = taskCard.getIcon();
+        this.description = taskCard.getDescription();
+        this.trainingClubId = taskCard.getTrainingClubId();
+        this.docs = docs.stream().map(DocVO::new).collect(Collectors.toList());
     }
 }

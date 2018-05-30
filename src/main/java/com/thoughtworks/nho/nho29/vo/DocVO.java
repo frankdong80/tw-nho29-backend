@@ -12,6 +12,8 @@ public class DocVO {
 
 
     public DocVO(Doc doc) {
-
+        this.id = doc.getId();
+        this.name = doc.getName();
+        this.url = doc.getUrl();
     }
 }

@@ -45,6 +45,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile("com.h2database:h2")
+	compile('org.projectlombok:lombok:1.16.18')
 
 	compileOnly('org.projectlombok:lombok:1.16.18')
 	testCompileOnly('org.projectlombok:lombok:1.16.18')
