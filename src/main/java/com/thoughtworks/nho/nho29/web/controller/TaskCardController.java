@@ -6,11 +6,7 @@ import com.thoughtworks.nho.nho29.service.DocService;
 import com.thoughtworks.nho.nho29.service.TaskCardService;
 import com.thoughtworks.nho.nho29.vo.TaskCardVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
@@ -29,5 +25,10 @@ public class TaskCardController {
 
 
         return  new TaskCardVO(taskCard, docs);
+    }
+
+    @GetMapping("training-clubs/{clubId}/task-cards")
+    public List<TaskCard> getTrainingCardsByTrainingClubId(@PathVariable Long clubId){
+        return taskCardService.getTaskCardListByTrainingClubId(clubId);
     }
 }
