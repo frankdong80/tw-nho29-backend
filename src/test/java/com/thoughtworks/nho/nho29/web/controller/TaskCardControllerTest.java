@@ -1,6 +1,5 @@
 package com.thoughtworks.nho.nho29.web.controller;
 
-<<<<<<< HEAD
 import com.thoughtworks.nho.nho29.domain.TaskCard;
 import com.thoughtworks.nho.nho29.service.TaskCardService;
 import org.junit.Before;
