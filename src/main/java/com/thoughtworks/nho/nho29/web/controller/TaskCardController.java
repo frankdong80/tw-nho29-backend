@@ -19,15 +19,14 @@ public class TaskCardController {
 
     @Autowired
     private TaskCardService taskCardService;
+
     @Autowired
     private DocService docService;
 
     @GetMapping("training-clubs/{clubId}/task-cards/{cardId}")
-    public TaskCardVO getTrainingCard(@PathVariable Long clubId, @PathVariable Long cardId){
+    public TaskCardVO getTrainingCard(@PathVariable Long clubId, @PathVariable Long cardId) {
         TaskCard taskCard = taskCardService.getTaskCardById(cardId);
         List<Doc> docs = docService.getDocsByTaskCardId(cardId);
-
-
-        return  new TaskCardVO(taskCard, docs);
+        return new TaskCardVO(taskCard, docs);
     }
 }

@@ -2,9 +2,11 @@ delete from nho_user;
 insert into nho_user values (0,'1','1');
 
 delete from training_club;
-insert into values (1, '训练营1', '欢迎来到训练营1', '张三');
+insert into training_club values (1, '训练营1', '欢迎来到训练营1', '张三');
 
 
+delete from task_card;
+delete from doc;
 --Story I5 专用 start--
 insert into training_club values(1001,'训练营1001','欢迎来到训练营1001','李四');
 
