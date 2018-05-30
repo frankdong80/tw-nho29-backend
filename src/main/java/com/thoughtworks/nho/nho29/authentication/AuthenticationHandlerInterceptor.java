@@ -39,10 +39,9 @@ public class AuthenticationHandlerInterceptor extends HandlerInterceptorAdapter{
 
         if (Objects.isNull(principal)) {
             principal = new User("admin", "admin");
+            session.setAttribute(SecurityUtils.SECURITY_KEY, principal);
         }
-
         SecurityUtils.setPrincipal(principal);
-
         return true;
     }
 }

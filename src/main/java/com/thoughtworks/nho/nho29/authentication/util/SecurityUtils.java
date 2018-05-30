@@ -1,6 +1,5 @@
 package com.thoughtworks.nho.nho29.authentication.util;
 
-import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 public abstract class SecurityUtils {

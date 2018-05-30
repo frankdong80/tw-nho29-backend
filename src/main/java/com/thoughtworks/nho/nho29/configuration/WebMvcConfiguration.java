@@ -1,6 +1,7 @@
 package com.thoughtworks.nho.nho29.configuration;
 
 import com.thoughtworks.nho.nho29.authentication.AuthenticationHandlerInterceptor;
+import lombok.AllArgsConstructor;
 import org.h2.server.web.WebServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -10,10 +11,10 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 
+@AllArgsConstructor
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
-    @Autowired
     private AuthenticationHandlerInterceptor authenticationHandlerInterceptor;
 
     @Override
