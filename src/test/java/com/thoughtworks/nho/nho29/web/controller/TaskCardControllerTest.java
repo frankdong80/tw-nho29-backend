@@ -54,6 +54,7 @@ public class TaskCardControllerTest {
     @Test
     public void integrate_test_TaskCardController_with_correct_clubId () throws Exception{
         mvc.perform(MockMvcRequestBuilders.get("/training-clubs/1001/task-cards").accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(equalTo(expectJson)));
     }
@@ -61,6 +62,7 @@ public class TaskCardControllerTest {
     @Test
     public void integrate_test_TaskCardController_with_wrong_clubId () throws Exception{
         mvc.perform(MockMvcRequestBuilders.get("/training-clubs/1/task-cards").accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(equalTo("[]")));
     }
