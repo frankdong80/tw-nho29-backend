@@ -1,6 +1,7 @@
 package com.thoughtworks.nho.nho29.web.controller;
 
 import com.thoughtworks.nho.nho29.authentication.util.SecurityUtils;
+import com.thoughtworks.nho.nho29.domain.TrainingClub;
 import com.thoughtworks.nho.nho29.domain.TrainingClubUser;
 import com.thoughtworks.nho.nho29.service.TrainingClubService;
 import com.thoughtworks.nho.nho29.service.TrainingClubUserService;
@@ -10,8 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collection;
 
 @RestController
 @AllArgsConstructor
@@ -23,24 +23,14 @@ public class TraniningClubController {
     private TrainingClubService trainingClubService;
 
     @GetMapping
-    public Map<String, Object> findTraniningClubsByTraniningClubUserId() {
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", 200);
-        response.put("message", "load data success");
-
+    public Collection<TrainingClub> findTraniningClubsByTraniningClubUserId() {
         TrainingClubUser user = TrainingClubUser.class.cast(SecurityUtils.getPrincipal());
         user = this.trainingClubUserService.findOne(user.getId());
-        response.put("data",user.getTrainingClubs());
-
-        return response;
+        return user.getTrainingClubs();
     }
 
     @GetMapping("/{traniningClubId}")
-    public Map<String, Object> findTraniningClubsById(@PathVariable("traniningClubId") Long traniningClubId) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", 200);
-        response.put("message", "load data success");
-        response.put("data",this.trainingClubService.findTrainingClubById(traniningClubId));
-        return response;
+    public TrainingClub findTraniningClubsById(@PathVariable("traniningClubId") Long traniningClubId) {
+        return this.trainingClubService.findTrainingClubById(traniningClubId);
     }
 }
