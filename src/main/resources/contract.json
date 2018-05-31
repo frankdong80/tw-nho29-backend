@@ -1,0 +1,27 @@
+[{
+  "path":"/api/training-clubs",
+  "description": "获取我的训练营",
+  "request":{},
+  "response":{
+    "data":[{
+      "id":1,
+      "name":"训练营一",
+      "description":"这是训练营一",
+      "thumbnailUrl":"http://......"
+    }]
+  }
+},{
+  "path":"/api/training-clubs/:id",
+  "description": "训练营详情",
+  "request":{
+    "id":1
+  },
+  "response":{
+    "data":{
+      "id":1,
+      "name":"训练营一",
+      "description":"这是训练营一",
+      "thumbnailUrl":"http://......"
+    }
+  }
+}]
