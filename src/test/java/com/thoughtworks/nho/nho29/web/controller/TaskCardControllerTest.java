@@ -1,9 +1,8 @@
 package com.thoughtworks.nho.nho29.web.controller;
 
 import com.thoughtworks.nho.nho29.authentication.AuthenticationHandlerInterceptor;
-import com.thoughtworks.nho.nho29.domain.DocRepository;
+import com.thoughtworks.nho.nho29.domain.Doc;
 import com.thoughtworks.nho.nho29.domain.TaskCard;
-import com.thoughtworks.nho.nho29.domain.TaskCardRepository;
 import com.thoughtworks.nho.nho29.service.DocService;
 import com.thoughtworks.nho.nho29.service.TaskCardService;
 import org.junit.Before;
@@ -20,15 +19,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(TaskCardController.class)
@@ -42,22 +42,26 @@ public class TaskCardControllerTest {
     private TaskCard taskcard;
 
     private String expectJson;
+
+    private List<Doc> docs;
+
     @MockBean
     private AuthenticationHandlerInterceptor authenticationHandlerInterceptor;
+
     @MockBean
     private DocService docService;
+
     @MockBean
     private TaskCardService taskCardService;
-    @MockBean
-    private DocRepository docRepository;
-    @MockBean
-    private TaskCardRepository taskCardRepository;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         taskcard = new TaskCard(1001l, "任务卡1001", "欢迎来到任务卡1001", "https://img.zcool.cn/community/012db458fca3fda8012160f7f86d21.png@1280w_1l_2o_100sh.png", 1001l, 0l);
         expectJson = "[{\"id\":1001,\"name\":\"任务卡1001\",\"description\":\"欢迎来到任务卡1001\",\"icon\":\"https://img.zcool.cn/community/012db458fca3fda8012160f7f86d21.png@1280w_1l_2o_100sh.png\",\"trainingClubId\":1001,\"testPaperId\":0},{\"id\":1002,\"name\":\"任务卡1002\",\"description\":\"欢迎来到任务卡1002\",\"icon\":\"https://img.zcool.cn/community/012db458fca3fda8012160f7f86d21.png@1280w_1l_2o_100sh.png\",\"trainingClubId\":1001,\"testPaperId\":0}]";
+        this.docs = new LinkedList<>();
+        this.docs.add(new Doc(1001L, "文档1001", "https://info.thoughtworks.com/rs/thoughtworks2/images/twebook-perspectives-estimation_1.pdf", 1001L));
+        this.docs.add(new Doc(1002L, "文档1002", "https://info.thoughtworks.com/rs/thoughtworks2/images/https://info.thoughtworks.com/rs/thoughtworks2/images/twebook-perspectives-estimation_1.pdf", 1002L));
     }
 
     @Test
@@ -85,13 +89,16 @@ public class TaskCardControllerTest {
     }
 
     @Test
-    public void getTrainingCardTest() throws Exception {
-        Long clubId = 1001L;
-        Long cardId = 1001L;
+    public void getTrainingCardByClubIdAndCardIdTest() throws Exception {
+        when(this.taskCardService.getTaskCardById(taskcard.getId())).thenReturn(taskcard);
+        when(this.docService.getDocsByTaskCardId(taskcard.getId())).thenReturn(this.docs);
 
-        String expected = "{\"id\":1001,\"name\":\"任务卡1001\",\"icon\":\"https://img.zcool.cn/community/012db458fca3fda8012160f7f86d21.png@1280w_1l_2o_100sh.png\",\"description\":\"欢迎来到任务卡1001\",\"trainingClubId\":1001,\"docs\":[{\"id\":1001,\"name\":\"文档1001\",\"url\":\"https://info.thoughtworks.com/rs/thoughtworks2/images/agile_maturity_model.pdf\"},{\"id\":1002,\"name\":\"文档1002\",\"url\":\"https://info.thoughtworks.com/rs/thoughtworks2/images/twebook-perspectives-estimation_1.pdf\"}]}";
-        this.mvc.perform(get("/training-clubs/{clubId}/task-cards/{cardId}", clubId, cardId))
-                .andDo(print()).andExpect(status().isOk());
-//                .andExpect(jsonPath("$.id", is(1001)));
+        this.mvc.perform(get("/training-clubs/{clubId}/task-cards/{cardId}",
+                taskcard.getTrainingClubId(),
+                taskcard.getId()).contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.docs", hasSize(2)))
+                .andExpect(jsonPath("$.name", is(taskcard.getName())));
     }
 }
