@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -55,7 +56,7 @@ public class TaskCardControllerTest {
 
     @Before
     public void setUp() {
-//        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.initMocks(this);
         taskcard = new TaskCard(1001l, "任务卡1001", "欢迎来到任务卡1001", "https://img.zcool.cn/community/012db458fca3fda8012160f7f86d21.png@1280w_1l_2o_100sh.png", 1001l, 0l);
         expectJson = "[{\"id\":1001,\"name\":\"任务卡1001\",\"description\":\"欢迎来到任务卡1001\",\"icon\":\"https://img.zcool.cn/community/012db458fca3fda8012160f7f86d21.png@1280w_1l_2o_100sh.png\",\"trainingClubId\":1001,\"testPaperId\":0},{\"id\":1002,\"name\":\"任务卡1002\",\"description\":\"欢迎来到任务卡1002\",\"icon\":\"https://img.zcool.cn/community/012db458fca3fda8012160f7f86d21.png@1280w_1l_2o_100sh.png\",\"trainingClubId\":1001,\"testPaperId\":0}]";
         this.docs = new LinkedList<>();
