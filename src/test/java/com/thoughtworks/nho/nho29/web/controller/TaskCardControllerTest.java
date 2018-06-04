@@ -8,12 +8,12 @@ import com.thoughtworks.nho.nho29.service.TaskCardService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -22,6 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,8 +35,8 @@ public class TaskCardControllerTest {
     @Autowired
     private MockMvc mvc;
 
-//    @InjectMocks
-//    private TaskCardController taskCardController;
+    @InjectMocks
+    private TaskCardController taskCardController;
 
     private TaskCard taskcard;
 
@@ -82,8 +83,8 @@ public class TaskCardControllerTest {
     public void test_TaskCardController_with_correct_clubId() throws Exception {
         when(taskCardService.getTaskCardListByTrainingClubId(anyLong()))
                 .thenReturn(Arrays.asList(taskcard, taskcard));
-        Long clubId = 1001l;
-//        assertEquals(Arrays.asList(taskcard, taskcard), taskCardController.getTrainingCardsByTrainingClubId(clubId));
+        Long clubId = 1001L;
+        assertEquals(Arrays.asList(taskcard, taskcard), taskCardController.getTrainingCardsByTrainingClubId(clubId));
     }
 
     @Test
@@ -97,6 +98,7 @@ public class TaskCardControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.docs", hasSize(2)))
-                .andExpect(jsonPath("$.name", is(taskcard.getName())));
+                .andExpect(jsonPath("$.name", is(taskcard.getName())))
+                .andExpect(jsonPath("$.description", is(taskcard.getDescription())));
     }
 }
