@@ -12,11 +12,14 @@ import java.util.List;
 @RestController
 public class TaskCardController {
 
-    @Autowired
-    private TaskCardService taskCardService;
+    private final TaskCardService taskCardService;
 
-    @Autowired
-    private DocService docService;
+    private final DocService docService;
+
+    public TaskCardController(TaskCardService taskCardService, DocService docService) {
+        this.taskCardService = taskCardService;
+        this.docService = docService;
+    }
 
     @GetMapping("training-clubs/{clubId}/task-cards/{cardId}")
     public TaskCardVO getTrainingCard(@PathVariable Long clubId, @PathVariable Long cardId) {

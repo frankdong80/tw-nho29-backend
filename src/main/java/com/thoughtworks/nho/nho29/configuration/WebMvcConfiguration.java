@@ -19,7 +19,7 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(authenticationHandlerInterceptor);
+//        registry.addInterceptor(authenticationHandlerInterceptor);
     }
 
     @Bean

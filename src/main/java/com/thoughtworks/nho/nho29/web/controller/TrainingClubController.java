@@ -16,21 +16,21 @@ import java.util.Collection;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/training-clubs")
-public class TraniningClubController {
+public class TrainingClubController {
 
     private TrainingClubUserService trainingClubUserService;
 
     private TrainingClubService trainingClubService;
 
     @GetMapping
-    public Collection<TrainingClub> findTraniningClubsByTraniningClubUserId() {
+    public Collection<TrainingClub> findTrainingClubsByTrainingClubUserId() {
         TrainingClubUser user = TrainingClubUser.class.cast(SecurityUtils.getPrincipal());
         user = this.trainingClubUserService.findOne(user.getId());
         return user.getTrainingClubs();
     }
 
-    @GetMapping("/{traniningClubId}")
-    public TrainingClub findTraniningClubsById(@PathVariable("traniningClubId") Long traniningClubId) {
-        return this.trainingClubService.findTrainingClubById(traniningClubId);
+    @GetMapping("/{trainingClubId}")
+    public TrainingClub findTrainingClubsById(@PathVariable("trainingClubId") Long trainingClubId) {
+        return this.trainingClubService.findTrainingClubById(trainingClubId);
     }
 }
